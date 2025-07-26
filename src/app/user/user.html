@@ -1,0 +1,104 @@
+<div class="form-wrapper">
+  <form
+    #userForm="ngForm"
+    (ngSubmit)="addUser(userForm.value, userForm)"
+    class="form-card"
+  >
+    <h2>Add User</h2>
+
+    <label>Enter Name</label>
+    <input
+      type="text"
+      name="name"
+      placeholder="Enter Your Name"
+      [ngModel]="selectedUser?.name"
+      required
+      #nameField="ngModel"
+    />
+    <div *ngIf="nameField.invalid && nameField.touched" class="error">
+      Name is required.
+    </div>
+
+    <label>Enter Email</label>
+    <input
+      type="email"
+      name="email"
+      placeholder="Enter Your Email"
+      [ngModel]="selectedUser?.email"
+      required
+      #emailField="ngModel"
+    />
+    <div *ngIf="emailField.invalid && emailField.touched" class="error">
+      Valid email is required.
+    </div>
+
+    <label>Enter Age</label>
+    <input
+      type="number"
+      name="age"
+      placeholder="Enter Your Age"
+      [ngModel]="selectedUser?.age"
+      required
+      min="1"
+      #ageField="ngModel"
+    />
+    <div *ngIf="ageField.invalid && ageField.touched" class="error">
+      Age is required and must be a positive number.
+    </div>
+
+    <div class="button-group">
+      <button
+        type="submit"
+        class="btn add"
+        *ngIf="!selectedUser"
+        [disabled]="userForm.invalid"
+      >
+        Add User
+      </button>
+
+      <ng-container *ngIf="selectedUser">
+        <button type="submit" class="btn update" [disabled]="userForm.invalid">
+          Update User
+        </button>
+        <button type="button" class="btn cancel" (click)="cancelEdit(userForm)">
+          Cancel Update
+        </button>
+      </ng-container>
+    </div>
+    <div *ngIf="successMessage" class="message">{{ successMessage }}</div>
+  </form>
+</div>
+
+
+
+<div class="user-card">
+  <div class="user-card-header">
+    <h2>All Users</h2>
+  </div>
+
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th colspan="2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user.id) {
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.age }}</td>
+          <td>
+            <button class="btn delete" (click)="deleteUser(user.id)">Delete</button>
+          </td>
+          <td>
+            <button class="btn update" (click)="selectUser(user.id)">Update</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
