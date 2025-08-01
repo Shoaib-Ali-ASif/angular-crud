@@ -47,12 +47,7 @@
     </div>
 
     <div class="button-group">
-      <button
-        type="submit"
-        class="btn add"
-        *ngIf="!selectedUser"
-        [disabled]="userForm.invalid"
-      >
+      <button type="submit" class="btn add" *ngIf="!selectedUser">
         Add User
       </button>
 
@@ -68,8 +63,6 @@
     <div *ngIf="successMessage" class="message">{{ successMessage }}</div>
   </form>
 </div>
-
-
 
 <div class="user-card">
   <div class="user-card-header">
@@ -87,17 +80,21 @@
     </thead>
     <tbody>
       @for (user of users; track user.id) {
-        <tr>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.age }}</td>
-          <td>
-            <button class="btn delete" (click)="deleteUser(user.id)">Delete</button>
-          </td>
-          <td>
-            <button class="btn update" (click)="selectUser(user.id)">Update</button>
-          </td>
-        </tr>
+      <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.age }}</td>
+        <td>
+          <button class="btn delete" (click)="deleteUser(user.id)">
+            Delete
+          </button>
+        </td>
+        <td>
+          <button class="btn update" (click)="selectUser(user.id)">
+            Update
+          </button>
+        </td>
+      </tr>
       }
     </tbody>
   </table>

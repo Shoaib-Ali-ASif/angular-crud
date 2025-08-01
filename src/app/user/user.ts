@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
 import { dataName } from '../interfaces/data';
 import { ApiUser } from '../services/api-user';
-import {
-  FormsModule,
-  NgForm,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, RouterOutlet , NgIf],
+  imports: [FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
@@ -35,15 +30,21 @@ export class User {
   }
 
   addUser(data: dataName, form: NgForm) {
-    if (!data.name || !data.email || data.age === undefined || data.age === null) {
+    if (
+      !data.name ||
+      !data.email ||
+      data.age === undefined ||
+      data.age === null
+    ) {
       this.successMessage = 'All fields are required.';
       return;
     }
 
-    const isDuplicate = this.users.some(user =>
-      user.id !== this.selectedUser?.id &&
-      (user.name.toLowerCase() === data.name.toLowerCase() ||
-       user.email.toLowerCase() === data.email.toLowerCase())
+    const isDuplicate = this.users.some(
+      (user) =>
+        user.id !== this.selectedUser?.id &&
+        (user.name.toLowerCase() === data.name.toLowerCase() ||
+          user.email.toLowerCase() === data.email.toLowerCase())
     );
 
     if (isDuplicate) {
